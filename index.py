@@ -70,18 +70,19 @@ def webhook():
     if (action == "rateChoice"):
         rate =  req.get("queryResult").get("parameters").get("rate")
         info = "您選擇的縣市是：" + rate + "的電影院：\n"
+        if(rate == "地址"):
+            collection_ref = db.collection("全台電影院")
+            docs = collection_ref.get()
+            result = ""
+            for doc in docs:
+                dict = doc.to_dict()
+                if rate in dict["rate"]:
+                    result += "電影院名稱：" + dict["title"] + "\n"
+                    result += "該電影院上映電影連結：" + dict["hyperlink"] + "\n"
+                    result += "地址：" + dict["adds"] + "\n"
+                    result += "電話：" + dict["tel"] + "\n\n"
+            info += result
 
-        collection_ref = db.collection("全台電影院")
-        docs = collection_ref.get()
-        result = ""
-        for doc in docs:
-            dict = doc.to_dict()
-            if rate in dict["rate"]:
-                result += "電影院名稱：" + dict["title"] + "\n"
-                result += "該電影院上映電影連結：" + dict["hyperlink"] + "\n"
-                result += "地址：" + dict["adds"] + "\n"
-                result += "電話：" + dict["tel"] + "\n\n"
-        info += result
     elif (action == "MovieDetail"): 
         cond =  req.get("queryResult").get("parameters").get("FilmQ")
         keyword =  req.get("queryResult").get("parameters").get("any")
