@@ -76,7 +76,7 @@ def webhook():
             result = ""
             for doc in docs:
                 dict = doc.to_dict()
-                if rate in dict["rate"]:
+                if rate in dict["adds"]:
                     result += "電影院名稱：" + dict["title"] + "\n"
                     result += "該電影院上映電影連結：" + dict["hyperlink"] + "\n"
                     result += "地址：" + dict["adds"] + "\n"
