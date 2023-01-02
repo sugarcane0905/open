@@ -70,7 +70,7 @@ def webhook():
     if (action == "rateChoice"):
         rate =  req.get("queryResult").get("parameters").get("rate")
         info = "您選擇的縣市是：" + rate + "的電影院：\n"
-        if(rate == "rate"):
+        if(rate == "縣市"):
             collection_ref = db.collection("全台電影院")
             docs = collection_ref.get()
             result = ""
