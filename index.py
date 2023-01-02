@@ -69,19 +69,19 @@ def webhook():
     #info = "動作：" + action + "； 查詢內容：" + msg
     if (action == "rateChoice"):
         rate =  req.get("queryResult").get("parameters").get("rate")
-        info = "您選擇的縣市是：" + rate + "的電影院：\n"
+        result = ""
         collection_ref = db.collection("全台電影院")
         docs = collection_ref.get()
-        result = ""
         found = False
         for doc in docs:
             dict = doc.to_dict()
-            if rate in dict["rate"]:
+            if rate in dict["adds"]:
                 found = True
                 result += "電影院名稱：" + dict["title"] + "\n"
                 result += "該電影院上映電影連結：" + dict["hyperlink"] + "\n"
                 result += "地址：" + dict["adds"] + "\n"
                 result += "電話：" + dict["tel"] + "\n\n"
+        result += "您選擇的縣市是：" + rate + "的電影院：\n"        
         if not found:
             result += "很抱歉，目前無符合這個關鍵字的相關電影院喔"
 
