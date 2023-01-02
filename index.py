@@ -89,13 +89,13 @@ def webhook():
         cond =  req.get("queryResult").get("parameters").get("FilmQ")
         keyword =  req.get("queryResult").get("parameters").get("any")
         info = "您要查詢電影院的" + cond + "，關鍵字是：" + keyword + "\n\n"
-        if (cond == "名稱地址"):
+        if (cond == "電影院名稱"):
             collection_ref = db.collection("全台電影院")
             docs = collection_ref.get()
             found = False
             for doc in docs:
                 dict = doc.to_dict()
-                if keyword in dict["title"]["adds"]:
+                if keyword in dict["title"]:
                     found = True 
                     info += "電影院名稱：" + dict["title"] + "\n"
                     info += "該電影院上映電影連結：" + dict["hyperlink"] + "\n"
